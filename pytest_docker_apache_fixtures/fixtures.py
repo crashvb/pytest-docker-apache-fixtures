@@ -488,7 +488,7 @@ def _apache_insecure(
         LOGGER.debug("Starting insecure apache service [%d] ...", i)
         LOGGER.debug("  docker-compose : %s", path_docker_compose)
         LOGGER.debug("  service name   : %s", service_name)
-        LOGGER.debug("  apachecfg       : %s", apache_apachecfg_insecure_list[i])
+        LOGGER.debug("  apachecfg      : %s", apache_apachecfg_insecure_list[i])
 
         endpoint = start_service(
             docker_services,
@@ -617,7 +617,7 @@ def _apache_secure(
         LOGGER.debug("  docker-compose : %s", path_docker_compose)
         LOGGER.debug("  ca certificate : %s", apache_certs_list[i].ca_certificate)
         LOGGER.debug("  certificate    : %s", apache_certs_list[i].certificate)
-        LOGGER.debug("  apachecfg       : %s", apache_apachecfg_secure_list[i])
+        LOGGER.debug("  apachecfg      : %s", apache_apachecfg_secure_list[i])
         LOGGER.debug("  private key    : %s", apache_certs_list[i].private_key)
         LOGGER.debug("  password       : %s", apache_password_list[i])
         LOGGER.debug("  service name   : %s", service_name)

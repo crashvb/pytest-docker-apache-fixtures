@@ -164,11 +164,11 @@ Provides an SSL context containing the CA trust store from the  [apache_cacerts]
 
 Provides a generated username to use for authentication to the secure apache service. This fixture is used to replicate docker images into the secure apache service.
 
-### <a name="pdhf_docker_compose_insecure"></a> pdhf_docker_compose_insecure
+### <a name="pdaf_docker_compose_insecure"></a> pdaf_docker_compose_insecure
 
 This fixture uses the `docker_compose_files` fixture to locate a user-defined docker-compose configuration file (typically <tt>tests/docker-compose.yml</tt>) that contains the <tt>pytest-docker-apache-insecure</tt> service. If one cannot be located, an embedded configuration is copied to a temporary location and returned. This fixture is used to instantiate the insecure apache service. The configuration will be treated as a template; the <tt>$PATH_APACHECFG</tt> token will be populated with the absolute path provided by the [apache_apachecfg](#apache_apachecfg) fixture.
 
-### <a name="pdhf_docker_compose_secure"></a> pdhf_docker_compose_secure
+### <a name="pdaf_docker_compose_secure"></a> pdaf_docker_compose_secure
 
 This fixture uses the `docker_compose_files` fixture to locate a user-defined docker-compose configuration file (typically <tt>tests/docker-compose.yml</tt>) that contains the <tt>pytest-docker-apache-secure</tt> service. If one cannot be located, an embedded configuration is copied to a temporary location and returned. This fixture is used to instantiate the secure apache service. The configuration will be treated as a template; the <tt>$PATH_CERTIFICATE</tt>, <tt>$PATH_HTPASSWD</tt>, <tt>$PATH_KEY</tt>, and <tt>$PATH_APACHECFG</tt> tokens will be populated with the absolute paths provided by the [apache_certs](#apache_certs), [apache_htpasswd](#apache_htpasswd), and [apache_apachecfg](#apache_apachecfg) fixtures, as appropriate.
 
@@ -195,13 +195,13 @@ def test_apache_secure_list(apache_secure_list: List[ApacheSecure]):
 
 It is possible to use both singular and enumerated fixtures within the same test context; however, the same values will be returned for the singular fixture as the first enumerated list value (i.e. apache_secure == apache_secure_list[0]). To avoid complications with lower layers, mainly docker-compose, and to allow for this interchangeability, caching is used internally.
 
-By default, the scale factor of the enumerated instances is set to one (n=1). This value can be changed by overriding the `pdhf_scale_factor` fixture, as follows:
+By default, the scale factor of the enumerated instances is set to one (n=1). This value can be changed by overriding the `pdaf_scale_factor` fixture, as follows:
 
 ```python
 import pytest
 
 @pytest.fixture(scope="session")
-def pdhf_scale_factor() -> int:
+def pdaf_scale_factor() -> int:
     return 4
 ```
 

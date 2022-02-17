@@ -7,7 +7,6 @@
 import logging
 
 from base64 import b64decode
-from http.client import HTTPResponse
 from pathlib import Path
 from ssl import SSLContext
 from typing import Dict, List
@@ -284,6 +283,7 @@ def test_apache_secure(
     get_headers: Dict[str, str],
     apache_secure: ApacheSecure,
 ):
+    # pylint: disable=consider-using-with
     """Test that an secure apache can be instantiated."""
     assert "127.0.0.1" in apache_secure.endpoint
 
@@ -342,6 +342,7 @@ def test_apache_secure_list(
     apache_secure_list: List[ApacheSecure],
     pdaf_scale_factor: int,
 ):
+    # pylint: disable=consider-using-with
     """Test that an secure apache can be instantiated."""
     for i in range(pdaf_scale_factor):
         assert "127.0.0.1" in apache_secure_list[i].endpoint
@@ -352,16 +353,20 @@ def test_apache_secure_list(
             url=f"https://{apache_secure_list[i].endpoint}/",
         )
         with urllibrequest.urlopen(
-                context=apache_secure_list[i].ssl_context, url=request
+            context=apache_secure_list[i].ssl_context, url=request
         ) as response:
             assert response.code == 200
 
         # Error: Unauthenticated
         with pytest.raises(HTTPError) as exception_info:
             request = urllibrequest.Request(
-                headers=get_headers, method="HEAD", url=f"https://{apache_secure_list[i].endpoint}/"
+                headers=get_headers,
+                method="HEAD",
+                url=f"https://{apache_secure_list[i].endpoint}/",
             )
-            urllibrequest.urlopen(context=apache_secure_list[i].ssl_context, url=request)
+            urllibrequest.urlopen(
+                context=apache_secure_list[i].ssl_context, url=request
+            )
         assert "401" in str(exception_info.value)
 
         # Error: CA not trusted

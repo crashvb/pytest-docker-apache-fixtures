@@ -62,7 +62,7 @@ def check_url_secure(
         https_connection = HTTPSConnection(
             context=ssl_context, host=docker_ip, port=public_port
         )
-        https_connection.request("HEAD", "/v2/", headers=auth_header)
+        https_connection.request("HEAD", "/", headers=auth_header)
         return https_connection.getresponse().status < 500
     except Exception:  # pylint: disable=broad-except
         return False
